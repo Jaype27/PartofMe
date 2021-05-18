@@ -7,7 +7,7 @@ public class HealthHeart : MonoBehaviour {
 
 	// TODO: Requires further testing
 	[Header("Health")]
-	int _health;
+	[SerializeField] int _health;
 	[SerializeField] HeartSlot[] _heartSlot;
 
 	[System.Serializable]
@@ -24,7 +24,10 @@ public class HealthHeart : MonoBehaviour {
 
 
 	private int GetHealth(CharacterType characterType) {
-		return GetHeartSlot(characterType).numOfHearts;
+
+		_health = GetHeartSlot(characterType).numOfHearts;
+
+		return _health;
 	}
 
 	public void ObtainHealthType(CharacterType characterType, int newHeart) {
@@ -32,8 +35,8 @@ public class HealthHeart : MonoBehaviour {
 	}
 
 	public void DisplayHearts(CharacterType characterType) {
-		if(_health > GetHeartSlot(characterType).numOfHearts) {
-			_health = GetHeartSlot(characterType).numOfHearts;
+		if(_health > GetHealth(characterType)) {
+			_health = GetHealth(characterType);
 		}
 
 		for(int i = 0; i < _hearts.Length; i++) {
@@ -44,7 +47,7 @@ public class HealthHeart : MonoBehaviour {
 				_hearts[i].sprite = _emptyHeart;
 			}
 
-			if(i < GetHeartSlot(characterType).numOfHearts) {
+			if(i < GetHealth(characterType)) {
 				_hearts[i].enabled = true;
 			} else {
 				_hearts[i].enabled = false;
